@@ -35,22 +35,43 @@ jobs:
           docker run drf-docker-app python manage.py test
 
   deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-        - name: SSH into Server and Pull Latest Code
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.PASSWORD }}
-            script: |
-              cd ~/django-api
-              git pull origin main
-              docker compose down
-              docker compose build
-              docker compose up -d
+      - name: SSH into Server and Deploy Application
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd ~/django-api
+            
+            # git pull origin main
+
+            # Ensure .env exists
+            if [ ! -f .env ]; then
+              echo "Environment file (.env) missing!" && exit 1
+            fi
+
+            # Stop existing containers
+            # docker compose down
+
+            # Rebuild Docker image with cache
+            # docker compose build --no-cache
+
+            # Apply migrations
+            # docker compose run web python manage.py migrate
+
+            # Collect static files
+            # docker compose run web python manage.py collectstatic --noinput
+
+            # Restart application
+            # docker compose up -d
+
+            # Health check
+            curl --fail http://localhost:8000 || (echo "Health check failed" && exit 1)
 

@@ -41,16 +41,7 @@ jobs:
         - name: Checkout Code
           uses: actions/checkout@v4
 
-        - name: Copy files to server
-          uses: appleboy/scp-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.PASSWORD }}
-            source: "."
-            target: "~/django-api"
-
-        - name: SSH and Restart Docker
+        - name: SSH into Server and Pull Latest Code
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.HOST }}
@@ -58,6 +49,8 @@ jobs:
             password: ${{ secrets.PASSWORD }}
             script: |
               cd ~/django-api
+              git pull origin main
               docker compose down
-              docker compose up --build -d
+              docker compose build
+              docker compose up -d
 

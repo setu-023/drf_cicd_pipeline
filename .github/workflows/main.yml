@@ -53,9 +53,5 @@ jobs:
           # Pull the latest image
           docker pull setu0123/drf_cicd_pipeline:latest
           
-          # Stop and remove existing container
-          docker-compose down || true
-
-          # Start new container
-          docker-compose up -d --build
-          EOF
+          docker-compose -f /home/ubuntu/drf_cicd_pipeline down || true
+          docker-compose -f /home/ubuntu/drf_cicd_pipeline up -d --build

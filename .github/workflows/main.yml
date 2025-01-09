@@ -53,5 +53,5 @@ jobs:
           # Pull the latest image
           docker pull setu0123/drf_cicd_pipeline:latest
           
-          docker-compose -f /home/ubuntu/drf_cicd_pipeline down || true
-          docker-compose -f /home/ubuntu/drf_cicd_pipeline up -d --build
+          docker-compose -f /home/ubuntu/drf_cicd_pipeline/docker-compose.yml down || true
+          docker-compose -f /home/ubuntu/drf_cicd_pipeline/docker-compose.yml up -d --build

@@ -54,8 +54,8 @@ jobs:
           docker pull setu0123/drf_cicd_pipeline:latest
           
           # Stop and remove existing container
-          docker-compose -f /path/to/docker-compose.yml down || true
+          docker-compose down || true
 
           # Start new container
-          docker-compose -f /path/to/docker-compose.yml up -d --build
+          docker-compose up -d --build
           EOF

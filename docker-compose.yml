@@ -2,9 +2,4 @@ services:
   app:
     build: .
     ports:
-<<<<<<< HEAD
       - "8000:8000"
-
-=======
-      - "80:8000"
->>>>>>> b422408b7dffc40034d13fa5fdd2918fe45a03e2

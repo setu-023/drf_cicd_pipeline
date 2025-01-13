@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-    container_name: django_app
+    container_name: drf_cicd_pipeline
     volumes:
       - .:/app
     expose:
